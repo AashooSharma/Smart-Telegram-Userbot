@@ -68,3 +68,35 @@ sudo apt update && apt upgrade -y
 sudo apt install git curl python3-pip ffmpeg -y
 pip3 install -U pip
 # ... (follow the rest of the commands from your original README)
+pip3 install -U pip
+curl -sL https://deb.nodesource.com/setup_16.x | bash -
+sudo apt-get install -y nodejs
+npm i -g npm
+git clone https://github.com/YourGitHubUsername/YourUserbotRepo # Clone your repo.
+cd YourUserbotRepo
+pip3 install -U -r requirements.txt
+cp example.env .env # Use your preferred text editor to edit ENVs
+vim .env # Fill up your ENVs (Steps: press 'i' to enter insert mode, make edits, then press 'Esc' and type ':wq!' to save and exit)
+python3 main.py # Run the bot
+
+
+
+
+
+### 🤖 Credits and Acknowledgements:
+
+- [@YourTelegramUsername](https://t.me/YourTelegramUsername): Developer
+- [@YourBotUsername](https://t.me/YourBotUsername): Test Bot
+
+[![ForTheBadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
+
+### Connect and Support 🌐
+
+<a href="https://t.me/YourUserbotSupport"><img src="https://img.shields.io/badge/-Support%20Group-blue.svg?style=for-the-badge&logo=Telegram"></a>
+<a href="https://t.me/YourTelegramUsername"><img src="https://img.shields.io/badge/%20Developer-blue.svg?style=for-the-badge&logo=Telegram"></a>
+
+------------------------------------------------
+-------------------------------------------------
+```
+
+
