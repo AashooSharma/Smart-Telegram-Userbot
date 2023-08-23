@@ -6,10 +6,18 @@
 Your Smart Telegram Userbot is your go-to companion for streamlining tasks, providing information, and enhancing your Telegram chats.
 
 <p align="center">
-    <img src="https://img.shields.io/github/stars/YourGitHubUsername/YourUserbotRepo?style=for-the-badge" alt="Stars">
-    <img src="https://img.shields.io/github/forks/YourGitHubUsername/YourUserbotRepo?style=for-the-badge" alt="Forks">
-    <!-- Add more badges if needed -->
+    <img src="https://img.shields.io/github/stars/AashooSharma/Smart-Telegram-Userbot?style=for-the-badge" alt="Stars">
+    <img src="https://img.shields.io/github/forks/AashooSharma/Smart-Telegram-Userbot?style=for-the-badge" alt="Forks">
+    <img src="https://img.shields.io/github/watchers/AashooSharma/Smart-Telegram-Userbot?style=for-the-badge" alt="Watchers">
+    <img src="https://img.shields.io/github/license/AashooSharma/Smart-Telegram-Userbot?style=for-the-badge" alt="LICENSE">
+    <img src="https://img.shields.io/github/commit-activity/w/AashooSharma/Smart-Telegram-Userbot?style=for-the-badge" alt="Commit Activity">
+    <a href="https://github.com/AashooSharma/Smart-Telegram-Userbot/commits/master"> <img src="https://img.shields.io/github/last-commit/AashooSharma/Smart-Telegram-Userbot?color=blue&logo=github&logoColor=green&style=for-the-badge" /></a>
+    <img src="https://img.shields.io/github/contributors/AashooSharma/Smart-Telegram-Userbot?style=for-the-badge" alt="Contributors">
+    <a href="https://github.com/AashooSharma/Smart-Telegram-Userbot/issues"> <img src="https://img.shields.io/github/issues/AashooSharma/Smart-Telegram-Userbot?color=blueviolet&logo=github&logoColor=green&style=for-the-badge" /></a>
+    <a href="https://github.com/AashooSharma/Smart-Telegram-Userbot"> <img src="https://img.shields.io/github/repo-size/AashooSharma/Smart-Telegram-Userbot?color=orange&logo=github&logoColor=green&style=for-the-badge" /></a>
+    <a href="https://pypi.org/project/Pyrogram/"> <img src="https://img.shields.io/pypi/v/pyrogram?color=yellow&label=pyrogram&logo=python&logoColor=green&style=for-the-badge" /></a>
 </p>
+
 
 <details>
 <summary><h3> Requirements 📝</h3></summary>
@@ -56,10 +64,12 @@ Contributions are welcomed! Open issues for suggestions, bug reports, or enhance
 ### 📦 Installation and Deployment:
 
 **Heroku:**
-<p align="center"><a href="https://heroku.com/deploy?template=https://github.com/YourGitHubUsername/YourUserbotRepo"> <img src="https://img.shields.io/badge/Deploy%20To%20Heroku-black?style=for-the-badge&logo=heroku" width="200" height="35.45"/></a></p>
+<p align="center"><a href="https://heroku.com/deploy?template=https://github.com/AashooSharma/Smart-Telegram-Userbot"> <img src="https://img.shields.io/badge/Deploy%20To%20Heroku-black?style=for-the-badge&logo=heroku" width="200" height="35.45"/></a></p>
 
 **Okteto:**
-<p align="center"><a href="https://cloud.okteto.com/deploy?repository=https://github.com/YourGitHubUsername/YourUserbotRepo"><img src="https://img.shields.io/badge/Deploy%20To%20Okteto-informational?style=for-the-badge&logo=Okteto" width="200" height="35.45"/></a></p>
+<p align="center"><a href="https://cloud.okteto.com/deploy?repository=https://github.com/AashooSharma/Smart-Telegram-Userbot"><img src="https://img.shields.io/badge/Deploy%20To%20Okteto-informational?style=for-the-badge&logo=Okteto" width="200" height="35.45"/></a></p>
+
+
 
 **VPS Server:**
 ```sh
