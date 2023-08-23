@@ -78,7 +78,7 @@ pip3 install -U -r requirements.txt
 cp example.env .env # Use your preferred text editor to edit ENVs
 vim .env # Fill up your ENVs (Steps: press 'i' to enter insert mode, make edits, then press 'Esc' and type ':wq!' to save and exit)
 python3 main.py # Run the bot
-
+```
 
 
 
@@ -97,6 +97,6 @@ python3 main.py # Run the bot
 
 ------------------------------------------------
 -------------------------------------------------
-```
+
 
 
