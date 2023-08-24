@@ -1,46 +1,167 @@
+# bot_All_features/function_1.py
+
 import datetime
 import json
 
-class ReminderManager:
-    def __init__(self, reminders_file):
-        self.reminders_file = reminders_file
-        self.load_reminders()
+class Function1:
+    def __init__(self, client, db_path):
+        self.client = client
+        self.db_path = db_path
 
-    def load_reminders(self):
+    async def handle_reminder(self, event):
+        args = event.pattern_match.group(1).split(" ", 1)
+        if len(args) == 1 and args[0].lower() == "help":
+            await self.show_help(event)
+        else:
+            subcommand = args[0].lower()
+            subcommand_args = args[1].split(" ", 1)
+
+            if subcommand == "add":
+                await self.add_reminder(event, subcommand_args)
+            elif subcommand == "show":
+                await self.show_reminders(event, subcommand_args)
+            elif subcommand == "remove":
+                await self.remove_reminder(event, subcommand_args)
+            elif subcommand == "edit":
+                await self.edit_reminder(event, subcommand_args)
+            else:
+                await event.reply("Invalid subcommand. Use !remind help for usage details.")
+
+    async def show_help(self, event):
+        help_message = (
+            "Usage examples:\n"
+            "!remind add \"DD-mm-yyyy\" \"3:30 PM\" \"reminder title\" \"reminder message\"\n"
+            "!remind show all\n"
+            "!remind show \"reminder title\"\n"
+            "!remind remove \"reminder title\"\n"
+            "!remind edit \"reminder title\" \"DD-mm-yyyy\" \"3:30 PM\" \"updated reminder message\""
+        )
+        await event.reply(help_message)
+
+    async def add_reminder(self, event, args):
+        # Parse and validate input arguments
         try:
-            with open(self.reminders_file, 'r') as f:
-                self.reminders = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError):
-            self.reminders = []
+            date = datetime.datetime.strptime(args[0], "%d-%m-%Y")
+            time = datetime.datetime.strptime(args[1], "%I:%M %p")
+        except ValueError:
+            await event.reply("Invalid date or time format. Use DD-mm-yyyy and h:mm AM/PM formats.")
+            return
 
-    def save_reminders(self):
-        with open(self.reminders_file, 'w') as f:
-            json.dump(self.reminders, f, indent=4)
+        reminder_title, reminder_message = "", ""
+        if len(args) >= 3:
+            reminder_title = args[2]
+        if len(args) >= 4:
+            reminder_message = args[3]
 
-    def add_reminder(self, user_id, task, date_time):
-        reminder = {
-            'user_id': user_id,
-            'task': task,
-            'date_time': date_time
-        }
-        self.reminders.append(reminder)
-        self.save_reminders()
+        # Calculate the timestamp and add the reminder to the database
+        timestamp = (date + datetime.timedelta(hours=time.hour, minutes=time.minute)).timestamp()
+        reminders = await self.load_reminders()
+        reminders.append({"timestamp": timestamp, "title": reminder_title, "message": reminder_message})
+        await self.save_reminders(reminders)
 
-    def get_user_reminders(self, user_id):
-        user_reminders = [reminder for reminder in self.reminders if reminder['user_id'] == user_id]
-        return user_reminders
+        await event.reply("Reminder added successfully!")
 
-    def remove_reminder(self, user_id, index):
-        user_reminders = self.get_user_reminders(user_id)
-        if 0 <= index < len(user_reminders):
-            del self.reminders[self.reminders.index(user_reminders[index])]
-            self.save_reminders()
+    async def show_reminders(self, event, args):
+        reminders = await self.load_reminders()
+        if not reminders:
+            await event.reply("No reminders found.")
+            return
 
-    def clear_expired_reminders(self):
-        now = datetime.datetime.now()
-        self.reminders = [reminder for reminder in self.reminders if datetime.datetime.strptime(reminder['date_time'], '%Y-%m-%d %H:%M:%S') > now]
-        self.save_reminders()
+        if args[0].lower() == "all":
+            reminder_list = ""
+            for idx, reminder in enumerate(reminders, start=1):
+                timestamp = datetime.datetime.fromtimestamp(reminder["timestamp"]).strftime("%d-%m-%Y %I:%M %p")
+                reminder_list += f"{idx}. {reminder['title']} - {timestamp}\n"
 
-# Initialize the ReminderManager
-reminder_manager = ReminderManager('database/reminders.json')
+            await event.reply("Your reminders:\n" + reminder_list)
+        else:
+            await self.show_single_reminder(event, args[0])
+
+    async def show_single_reminder(self, event, reminder_title):
+        reminders = await self.load_reminders()
+        matching_reminders = [reminder for reminder in reminders if reminder["title"].lower() == reminder_title.lower()]
+
+        if not matching_reminders:
+            await event.reply(f"No reminders found with title: {reminder_title}")
+            return
+
+        reminder_list = ""
+        for idx, reminder in enumerate(matching_reminders, start=1):
+            timestamp = datetime.datetime.fromtimestamp(reminder["timestamp"]).strftime("%d-%m-%Y %I:%M %p")
+            reminder_list += f"{idx}. {timestamp} - {reminder['message']}\n"
+
+        await event.reply(f"Reminders with title '{reminder_title}':\n" + reminder_list)
+
+    async def remove_reminder(self, event, args):
+        reminders = await self.load_reminders()
+        if not reminders:
+            await event.reply("No reminders found.")
+            return
+
+        reminder_title = args[0]
+        matching_reminders = [reminder for reminder in reminders if reminder["title"].lower() == reminder_title.lower()]
+
+        if not matching_reminders:
+            await event.reply(f"No reminders found with title: {reminder_title}")
+            return
+
+        # Remove all matching reminders and save the updated list
+        reminders = [reminder for reminder in reminders if reminder not in matching_reminders]
+        await self.save_reminders(reminders)
+
+        await event.reply(f"Removed {len(matching_reminders)} reminders with title '{reminder_title}'.")
+
+    async def edit_reminder(self, event, args):
+        reminders = await self.load_reminders()
+        if not reminders:
+            await event.reply("No reminders found.")
+            return
+
+        reminder_title = args[0]
+        matching_reminders = [reminder for reminder in reminders if reminder["title"].lower() == reminder_title.lower()]
+
+        if not matching_reminders:
+            await event.reply(f"No reminders found with title: {reminder_title}")
+            return
+
+        new_date, new_time, new_message = "", "", ""
+        if len(args) >= 2:
+            new_date = args[1]
+        if len(args) >= 3:
+            new_time = args[2]
+        if len(args) >= 4:
+            new_message = args[3]
+
+        # Update the matching reminders with new values and save the updated list
+        for reminder in matching_reminders:
+            if new_date:
+                try:
+                    date = datetime.datetime.strptime(new_date, "%d-%m-%Y")
+                    reminder_date = datetime.datetime.fromtimestamp(reminder["timestamp"]).replace(hour=date.hour, minute=date.minute)
+                    reminder["timestamp"] = reminder_date.timestamp()
+                except ValueError:
+                    pass
+            if new_time:
+                try:
+                    time = datetime.datetime.strptime(new_time, "%I:%M %p")
+                    reminder_time = datetime.datetime.fromtimestamp(reminder["timestamp"]).replace(hour=time.hour, minute=time.minute)
+                    reminder["timestamp"] = reminder_time.timestamp()
+                except ValueError:
+                    pass
+            if new_message:
+                reminder["message"] = new_message
+
+        await self.save_reminders(reminders)
+        await event.reply(f"Updated {len(matching_reminders)} reminders with title '{reminder_title}'.")
+
+    async def load_reminders(self):
+        try:
+            with open(self.db_path + "/reminders.json", "r") as file:
+                return json.load(file)
+        except FileNotFoundError:
+            return []
+
+    async def save_reminders(self, reminders):
+        with open(self.db_path + "/reminders.json", "w") as file:
+            json.dump(reminders, file, indent=4)
 
