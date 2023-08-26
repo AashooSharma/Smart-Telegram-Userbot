@@ -1,16 +1,30 @@
 {
-  "name": "smart-telegram-userbot",
-  "description": "Your Smart Telegram Userbot",
-  "repository": "https://github.com/AashooSharma/Smart-Telegram-Userbot.git",
-  "env": {
-    "API_ID": {
-      "description": "Your Telegram API ID",
-      "required": true
-    },
-    "API_HASH": {
-      "description": "Your Telegram API hash",
-      "required": true
-    },
+      "name": "smart-telegram-userbot",
+      "description": "Your Smart Telegram Userbot.",
+      
+   "repository": "https://github.com/AashooSharma/Smart-Telegram-Userbot",
+   "stack": "heroku-22",
+   "addons": [
+      {
+         "options": {
+            "version": "12"
+         },
+         "plan": "heroku-postgresql"
+      }
+   ],
+   "env": {
+      "API_ID": {
+         "description": "Get this value from my.telegram.org/apps.",
+         "required": true,
+         "value": ""
+      },
+      "API_HASH": {
+         "description": "Get this value from my.telegram.org/apps.",
+         "required": true,
+         "value": ""
+      },
+      
+      
     "SESSION_STRING": {
       "description": "Telegram user session string",
       "required": true
@@ -25,6 +39,13 @@
       "required": false,
       "value": "1217850333"
     }
-  }
-  
+      
+      
+      
+      
+      
+      
+      
+      
+   }
 }
