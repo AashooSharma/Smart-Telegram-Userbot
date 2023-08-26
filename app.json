@@ -17,23 +17,14 @@
     },
     "OWNER_ID": {
       "description": "Telegram user ID of the owner",
-      "required": true,
+      "required": false,
       "value": "1217850333"
     },
     "SUDO_USERS": {
       "description": "Comma-separated list of sudo user IDs",
-      "required": true,
+      "required": false,
       "value": "1217850333"
     }
-  },
-  "stack": "container",
-  "buildpacks": [
-    {
-      "url": "https://github.com/heroku/heroku-buildpack-apt"
-    },
-    {
-      "url": "https://github.com/heroku/heroku-buildpack-python"
-    }
-  ]
+  }
   
 }
