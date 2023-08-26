@@ -23,29 +23,20 @@
          "required": true,
          "value": ""
       },
-      
-      
-    "SESSION_STRING": {
-      "description": "Telegram user session string",
-      "required": true
-    },
-    "OWNER_ID": {
-      "description": "Telegram user ID of the owner",
-      "required": false,
-      "value": "1217850333"
-    },
-    "SUDO_USERS": {
-      "description": "Comma-separated list of sudo user IDs",
-      "required": false,
-      "value": "1217850333"
-    }
-      
-      
-      
-      
-      
-      
-      
-      
+      "SESSION_STRING": {
+        "description": "Telegram user session string",
+        "required": true
+
+      },
+      "OWNER_ID": {
+        "description": "Telegram user ID of the owner",
+        "required": false,
+        "value": "1217850333"
+      },
+      "SUDO_USERS": {
+        "description": "Comma-separated list of sudo user IDs",
+        "required": false,
+        "value": "1217850333"
+      }
    }
 }
