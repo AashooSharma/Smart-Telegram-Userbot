@@ -1,0 +1,7 @@
+# important notice
+
+# first edit .env file and add api ID and api hash
+
+# and upload "userbot_session.session" file
+
+# after run GitHub actions
