@@ -7,9 +7,13 @@ from bot_All_features import function_1, function_2, function_3, function_4, fun
 class UserbotServices:
     def __init__(self, client):
         self.client = client
+        self.function_1 = function_1.Function1(client, "database")  # Create an instance of function_1 class
+
+
 
     async def handle_reminder(self, event):
-        await function_1.handle_reminder(self.client, event)
+        await self.function_1.handle_reminder(event)  # Call the appropriate method
+        #await function_1.handle_reminder(self.client, event)
 
     async def handle_weather(self, event):
         await function_2.handle_weather(self.client, event)
@@ -35,5 +39,5 @@ class UserbotServices:
     # Add more functions for handling additional features
 
 # Create an instance of UserbotServices
-userbot_services = UserbotServices(client)
+#userbot_services = UserbotServices(client)
 

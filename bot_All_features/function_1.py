@@ -9,22 +9,33 @@ class Function1:
         self.db_path = db_path
 
     async def handle_reminder(self, event):
-        args = event.pattern_match.group(1).split(" ", 1)
+        #args = event.pattern_match.group(1).split(" ", 1)
+        args = event.raw_text.split(" ", 1)  # Split the entire text after the command trigger
         if len(args) == 1 and args[0].lower() == "help":
             await self.show_help(event)
         else:
             subcommand = args[0].lower()
             subcommand_args = args[1].split(" ", 1)
 
-            if subcommand == "add":
+            subcommand_args_option= subcommand_args[0]
+            if subcommand_args_option == "add":
+                new_args= subcommand_args[1].split('"')
+                subcommand_args = [item.strip() for item in new_args if item.strip()]
                 await self.add_reminder(event, subcommand_args)
-            elif subcommand == "show":
+            elif subcommand_args_option == "show":
+                new_args= subcommand_args[1].split('"')
+                subcommand_args = [item.strip() for item in new_args if item.strip()]
                 await self.show_reminders(event, subcommand_args)
-            elif subcommand == "remove":
+            elif subcommand_args_option == "remove":
+                new_args= subcommand_args[1].split('"')
+                subcommand_args = [item.strip() for item in new_args if item.strip()]
                 await self.remove_reminder(event, subcommand_args)
-            elif subcommand == "edit":
+            elif subcommand_args_option == "edit":
+                new_args= subcommand_args[1].split('"')
+                subcommand_args = [item.strip() for item in new_args if item.strip()]
                 await self.edit_reminder(event, subcommand_args)
             else:
+                await event.reply(f"{subcommand_args}")
                 await event.reply("Invalid subcommand. Use !remind help for usage details.")
 
     async def show_help(self, event):
@@ -39,6 +50,11 @@ class Function1:
         await event.reply(help_message)
 
     async def add_reminder(self, event, args):
+        
+        #await event.reply(f"{args[1]}")
+        #new_args= args[1].split('"')
+#        args = [item.strip() for item in new_args if item.strip()]
+        #await event.reply(f"{args}")
         # Parse and validate input arguments
         try:
             date = datetime.datetime.strptime(args[0], "%d-%m-%Y")
