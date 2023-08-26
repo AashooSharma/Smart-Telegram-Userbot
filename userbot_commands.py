@@ -1,6 +1,6 @@
 import os
 import logging
-
+import config
 import json
 import datetime
 from telethon import events
@@ -63,6 +63,10 @@ class UserbotCommands:
         # Add more cases for other commands
     
     async def handle_commands(self, event):
+        user_id = event.sender_id
+        if user_id != config.OWNER_ID or user_id in config.SUDO_USERS:
+            return
+        # User is the owner or a sudo user
         self.logger.info("Received command: %s", event.raw_text)
         user_input = event.raw_text.lower()
 
